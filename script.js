@@ -1,15 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const cells = document.querySelectorAll(".cell");
-    const restartBtn = document.getElementById("restart-btn");
-    const modal = document.getElementById("modal");
-    const modalText = document.getElementById("modal-text");
-    const closeModal = document.getElementById("close-modal");
+    let cells = document.querySelectorAll(".cell");
+    let restartBtn = document.getElementById("restart-btn");
+    let modal = document.getElementById("modal");
+    let modalText = document.getElementById("modal-text");
+    let closeModal = document.getElementById("close-modal");
     let audio = document.getElementById('myAudio');
+    let winnerAudio = document.getElementById('winner_audio');
     let board = ["", "", "", "", "", "", "", "", ""];
     let currentPlayer = "X";
     let gameActive = true;
 
-    const winningConditions = [
+    let winningConditions = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8], 
         [0, 3, 6], [1, 4, 7], [2, 5, 8], 
         [0, 4, 8], [2, 4, 6]
@@ -20,8 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     closeModal.addEventListener("click", () => modal.style.display = "none");
 
     function handleCellClick(event) {
-        const clickedCell = event.target;
-        const clickedCellIndex = +clickedCell.dataset.index;
+        let clickedCell = event.target;
+        let clickedCellIndex = +clickedCell.dataset.index;
 
         if (board[clickedCellIndex] || !gameActive) return;
 
@@ -29,14 +30,18 @@ document.addEventListener("DOMContentLoaded", () => {
         clickedCell.innerHTML = `<span>${currentPlayer}</span>`;
         clickedCell.classList.add("clicked");
 
+        audio.currentTime=0;
         audio.play();
 
         if (checkWinner()) {
             gameActive = false;
             showModal(`Player ${currentPlayer === "X" ? "1" : "2"} Wins!`);
+            winnerAudio.play();
+            addSprinkles()
         } else if (!board.includes("")) {
             gameActive = false;
             showModal("It's a Draw!");
+            winnerAudio.play();
         } else {
             currentPlayer = currentPlayer === "X" ? "O" : "X";
         }
@@ -44,10 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function checkWinner() {
         for (let i = 0; i < winningConditions.length; i++) {
-            const condition = winningConditions[i];
-            const a = board[condition[0]];
-            const b = board[condition[1]];
-            const c = board[condition[2]];
+            let condition = winningConditions[i];
+            let a = board[condition[0]];
+            let b = board[condition[1]];
+            let c = board[condition[2]];
 
             if (a && a === b && a === c) {
                 return true;
