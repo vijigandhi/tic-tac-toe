@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let closeModal = document.getElementById("close-modal");
     let audio = document.getElementById('myAudio');
     let winnerAudio = document.getElementById('winner_audio');
+    let draw = document.getElementById('draw');
+
     let board = ["", "", "", "", "", "", "", "", ""];
     let currentPlayer = "X";
     let gameActive = true;
@@ -41,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (!board.includes("")) {
             gameActive = false;
             showModal("It's a Draw!");
-            winnerAudio.play();
+            draw.play();
         } else {
             currentPlayer = currentPlayer === "X" ? "O" : "X";
         }

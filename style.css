@@ -145,7 +145,7 @@ h1 {
     animation: sprinkle 1s ease-out infinite; 
 }
 
-#myAudio, #winner_audio{
+#myAudio, #winner_audio, #draw{
     visibility: hidden;
 }
 
